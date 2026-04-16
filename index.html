@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MUN Resolution Portal</title>
   <link rel="icon" type="image/png" href="chart.png">
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
   <style>
     :root {
       --navy:      #0b1a3b;
@@ -97,7 +97,7 @@
     .logo-emblem svg { width:100%; height:100%; }
 
     .logo-text {
-      font-family: 'Libre Baskerville', serif;
+      font-family: 'Montserrat';
       font-size: 1.2rem; font-weight:700;
       letter-spacing: .04em; color:white;
     }
@@ -143,7 +143,7 @@
     }
 
     .page-title {
-      font-family:'Libre Baskerville',serif;
+      font-family:'Montserrat';
       font-size:2.4rem; font-weight:700;
       line-height:1.1; color:var(--navy); margin-bottom:.5rem;
     }
@@ -231,7 +231,7 @@
     .clause-item { display:flex; gap:.6rem; align-items:flex-start; }
 
     .clause-label {
-      font-family:'Libre Baskerville',serif;
+      font-family:'Montserrat';
       font-style:italic; font-size:.83rem;
       color:var(--blue-mid); min-width:145px;
       padding-top:.72rem; flex-shrink:0;
@@ -304,7 +304,7 @@
     .res-header { display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; margin-bottom:.5rem; }
 
     .res-id { font-family:'JetBrains Mono',monospace; font-size:.62rem; color:var(--muted); letter-spacing:.1em; margin-bottom:.2rem; }
-    .res-title { font-family:'Libre Baskerville',serif; font-size:1.05rem; font-weight:700; line-height:1.3; color:var(--navy); }
+    .res-title { font-family:'Montserrat'; font-size:1.05rem; font-weight:700; line-height:1.3; color:var(--navy); }
 
     .res-meta { font-size:.78rem; color:var(--muted); margin-bottom:.6rem; display:flex; gap:.85rem; flex-wrap:wrap; }
 
@@ -320,6 +320,7 @@
     .badge-denied  { background:#fef2f2; color:#7f1d1d; border:1px solid #fca5a5; }
     .badge-debate  { background:#eff6ff; color:#1e3a8a; border:1px solid #93c5fd; }
     .badge-tabled  { background:#f9fafb; color:#4b5563; border:1px solid #d1d5db; }
+    .badge-flag  { background:#f31b2a; color:#e9e9e9; border:1px solid #fecaca; }
 
     .res-actions { display:flex; gap:.45rem; flex-wrap:wrap; margin-top:.85rem; padding-top:.75rem; border-top:1px solid var(--border); }
 
@@ -362,7 +363,7 @@
       border-radius:3px; box-shadow:0 2px 8px var(--shadow);
     }
 
-    .stat-num { font-family:'Libre Baskerville',serif; font-size:2rem; font-weight:700; color:var(--navy); line-height:1; }
+    .stat-num { font-family:'Montserrat'; font-size:2rem; font-weight:700; color:var(--navy); line-height:1; }
     .stat-label { font-family:'JetBrains Mono',monospace; font-size:.58rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-top:.25rem; }
 
     /* FILTERS */
@@ -416,7 +417,7 @@
     }
     .modal-overlay.open .modal { transform:translateY(0) scale(1); }
 
-    .modal-title { font-family:'Libre Baskerville',serif; font-size:1.3rem; font-weight:700; color:var(--navy); margin-bottom:1rem; }
+    .modal-title { font-family:'Montserrat'; font-size:1.3rem; font-weight:700; color:var(--navy); margin-bottom:1rem; }
     .modal-actions { display:flex; gap:.75rem; margin-top:1.5rem; justify-content:flex-end; }
 
     .btn-ghost {
@@ -434,7 +435,7 @@
       padding:2.5rem; width:100%; max-width:400px;
       box-shadow:0 8px 32px var(--shadow); border-radius:4px;
     }
-    .login-title { font-family:'Libre Baskerville',serif; font-size:1.6rem; font-weight:700; color:var(--navy); margin-bottom:.3rem; }
+    .login-title { font-family:'Montserrat'; font-size:1.6rem; font-weight:700; color:var(--navy); margin-bottom:.3rem; }
 
     .section-label { font-family:'JetBrains Mono',monospace; font-size:.63rem; letter-spacing:.16em; text-transform:uppercase; color:var(--blue-mid); margin-bottom:.6rem; margin-top:1rem; }
 
@@ -448,6 +449,232 @@
     ::-webkit-scrollbar { width:6px; }
     ::-webkit-scrollbar-track { background:var(--ice); }
     ::-webkit-scrollbar-thumb { background:var(--border-dk); border-radius:3px; }
+
+    /* ══ DARK MODE ══ */
+    body.dark {
+      --ice:    #0f172a;
+      --white:  #1e293b;
+      --ink:    #e2e8f0;
+      --muted:  #94a3b8;
+      --border: #334155;
+      --border-dk: #3b82f6;
+      --shadow: rgba(0,0,0,0.4);
+      background-image:
+        radial-gradient(ellipse at 0% 0%, rgba(37,99,235,.12) 0%, transparent 55%),
+        radial-gradient(ellipse at 100% 100%, rgba(11,26,59,.4) 0%, transparent 55%);
+    }
+
+    body.dark .form-card,
+    body.dark .res-card,
+    body.dark .stat-box,
+    body.dark .login-card,
+    body.dark .modal,
+    body.dark .filter-btn { background: #1e293b; }
+
+    body.dark .form-row input,
+    body.dark .form-row select,
+    body.dark .form-row textarea { background:#0f172a; color:#e2e8f0; border-color:#334155; }
+    body.dark .form-row input:focus,
+    body.dark .form-row select:focus,
+    body.dark .form-row textarea:focus { background:#0f172a; border-color:var(--blue-mid); }
+
+    body.dark .filter-btn { color:#94a3b8; border-color:#334155; }
+    body.dark .filter-btn:hover { color:var(--blue-lt); border-color:var(--blue-lt); }
+    body.dark .filter-btn.active { background:var(--blue-mid); border-color:var(--blue-mid); color:white; }
+
+    body.dark .res-title { color:#bfdbfe; }
+    body.dark .page-title { color:#bfdbfe; }
+    body.dark .stat-num { color:#bfdbfe; }
+    body.dark .empty-state { background:#1e293b; border-color:#334155; }
+    body.dark .chair-notes { background:#1e3a5f; border-color:#2563eb; color:#bfdbfe; }
+    body.dark .gdocs-preview { background:#1e293b; border-color:#334155; }
+    body.dark .gdocs-link-badge { background:#14532d; border-color:#166534; color:#bbf7d0; }
+    body.dark .dropdown-list { background:#1e293b; border-color:#334155; }
+    body.dark .dropdown-list div:hover { background:#0f172a; color:#bfdbfe; }
+    body.dark .btn-ghost { border-color:#334155; color:#94a3b8; }
+    body.dark .btn-ghost:hover { border-color:var(--blue-lt); color:var(--blue-lt); }
+    body.dark .announce-banner { background: #0f172a;}
+    body.dark .announce-banner .announce-text { color: #e2e8f0;}
+    body.dark .login-title {color: var(--sky);}
+
+    /* Dark mode toggle button */
+    .dark-toggle {
+      background: none;
+      border: 1.5px solid rgba(147,197,253,0.3);
+      color: #93c5fd;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .7rem;
+      letter-spacing: .1em;
+      padding: .35rem .75rem;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      margin-left: .75rem;
+    }
+    .dark-toggle:hover { background: rgba(255,255,255,.08); border-color:#93c5fd; color:white; }
+
+    /* ══ ANNOUNCEMENTS ══ */
+
+    /* Banner strip that appears at top when there are active announcements */
+    .announce-banner {
+      display: none;
+      background: #f9fafb;
+      border-bottom: 2px solid var(--blue-mid);
+      padding: .6rem 2.5rem;
+      color: #000;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .9rem;
+      letter-spacing: .06em;
+      align-items: center;
+      gap: .75rem;
+      position: sticky;
+      top: 68px;
+      z-index: 99;
+    }
+    .announce-banner.visible { display: flex; }
+    .announce-banner .announce-icon { font-size: 1rem; flex-shrink:0; }
+    .announce-banner .announce-text { flex:1; }
+    .announce-banner .announce-count {
+      background: var(--blue-mid);
+      color: white;
+      font-size: .6rem;
+      padding: .15rem .5rem;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+    .announce-banner .announce-view-btn {
+      background: none;
+      border: 1px solid rgba(147,197,253,.5);
+      color: var(--sky);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .1em;
+      padding: .25rem .65rem;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all .2s;
+      flex-shrink: 0;
+    }
+    .announce-banner .announce-view-btn:hover { background: rgba(255,255,255,.1); }
+
+    /* Announcement cards on the board page */
+    .announce-section { margin-bottom: 2rem; }
+    .announce-section-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .65rem; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--blue-mid);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: .5rem; margin-bottom: 1rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .announce-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--blue-mid);
+      border-radius: 3px;
+      padding: 1rem 1.25rem;
+      margin-bottom: .75rem;
+      box-shadow: 0 2px 8px var(--shadow);
+      animation: fadeUp .3s ease;
+    }
+
+    body.dark .announce-card { background: #1e293b; }
+
+    .announce-card.priority-urgent { border-left-color: #dc2626; }
+    .announce-card.priority-info   { border-left-color: var(--blue-mid); }
+    .announce-card.priority-good   { border-left-color: #16a34a; }
+
+    .announce-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: .75rem;
+      margin-bottom: .4rem;
+    }
+
+    .announce-card-title {
+      font-family: 'Montserrat';
+      font-size: 1rem; font-weight: 700;
+      color: var(--navy); line-height: 1.3;
+    }
+    body.dark .announce-card-title { color: #bfdbfe; }
+
+    .announce-priority-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .57rem; letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .18rem .5rem; border-radius: 2px;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .priority-badge-urgent { background:#fef2f2; color:#7f1d1d; border:1px solid #fca5a5; }
+    .priority-badge-info   { background:#eff6ff; color:#1e3a8a; border:1px solid #93c5fd; }
+    .priority-badge-good   { background:#f0fdf4; color:#14532d; border:1px solid #86efac; }
+
+    .announce-card-body { font-size: .88rem; color: #374151; line-height: 1.6; margin-bottom: .5rem; }
+    body.dark .announce-card-body { color: #94a3b8; }
+
+    .announce-card-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .62rem; color: var(--muted);
+      letter-spacing: .06em;
+    }
+
+    /* Targeting badge — which committee */
+    .announce-target {
+      display: inline-block;
+      background: var(--ice); border: 1px solid var(--border-dk);
+      color: var(--navy-s);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .58rem; letter-spacing: .1em;
+      padding: .12rem .4rem; border-radius: 2px; margin-right: .3rem;
+    }
+    body.dark .announce-target { background: #1e3a5f; color: #bfdbfe; }
+
+    /* Admin announcement panel */
+    .announce-admin-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--blue-mid);
+      border-radius: 4px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px var(--shadow);
+    }
+    body.dark .announce-admin-card { background: #1e293b; }
+
+    .announce-admin-title {
+      font-family: 'Montserrat';
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--navy); margin-bottom: 1.25rem;
+    }
+    body.dark .announce-admin-title { color: #bfdbfe; }
+
+    .announce-list-admin { display: flex; flex-direction: column; gap: .6rem; margin-top: 1rem; }
+
+    .announce-admin-item {
+      display: flex; align-items: center;
+      gap: .75rem; padding: .65rem .9rem;
+      background: var(--ice); border: 1px solid var(--border);
+      border-radius: 3px;
+    }
+    body.dark .announce-admin-item { background: #0f172a; border-color: #334155; }
+
+    .announce-admin-item-text { flex:1; font-size:.85rem; }
+    .announce-admin-item-title { font-weight:600; color:var(--ink); margin-bottom:.15rem; }
+    body.dark .announce-admin-item-title { color:#e2e8f0; }
+    .announce-admin-item-meta { font-family:'JetBrains Mono',monospace; font-size:.6rem; color:var(--muted); }
+
+    .btn-del-announce {
+      background:none; border:1px solid #fca5a5; color:#ef4444;
+      font-family:'JetBrains Mono',monospace; font-size:.6rem;
+      letter-spacing:.1em; padding:.3rem .65rem;
+      cursor:pointer; border-radius:2px; transition:all .18s; flex-shrink:0;
+    }
+    .btn-del-announce:hover { background:#fef2f2; }
   </style>
 </head>
 <body>
@@ -471,17 +698,30 @@
   <nav class="nav-tabs">
     <button class="nav-tab active" onclick="showPage('delegate',this)">Delegate Portal</button>
     <button class="nav-tab" onclick="showPage('board',this)">Resolution Board</button>
+    <button class="nav-tab" onclick="window.open('https://docs.google.com/spreadsheets/d/1b_I1f7F8ul7AD8OrT5mxLrEGVOwp_91Kzpr-07SicKw/edit?gid=0#gid=0', '_blank')">
+  Schedule
+</button>
     <button class="nav-tab" onclick="showPage('chair',this)">Chair Admin</button>
   </nav>
+  <button class="dark-toggle" onclick="toggleDark()" id="dark-btn" title="Toggle dark mode">🌙 Dark</button>
 </header>
+
+<!-- ANNOUNCEMENT BANNER (visible when announcements exist) -->
+<div class="announce-banner" id="announce-banner">
+</script>
+  <span class="announce-icon">📢</span>
+  <span class="announce-text" id="announce-banner-text">New announcements from the chairs</span>
+  <span class="announce-count" id="announce-banner-count">0</span>
+  <button class="announce-view-btn" onclick="showPage('board', document.querySelectorAll('.nav-tab')[1]); setTimeout(()=>document.getElementById('announce-section').scrollIntoView({behavior:'smooth'}),100)">View →</button>
+</div>
 
 <div class="toast" id="toast"></div>
 
 
 <!-- ══ DELEGATE PORTAL ══ -->
 <div class="page active" id="page-delegate">
-  <p class="page-eyebrow">▸ Submit a Resolution</p>
-  <h1 class="page-title">Draft Your Resolution</h1>
+  <p class="page-eyebrow">▸ Manor Hall Model United Nations</p>
+  <h1 class="page-title">Submit Your Resolution</h1>
   <div class="divider"></div>
 
   <div class="form-card">
@@ -536,7 +776,7 @@
     </div>
 
     <div class="form-row">
-      <label>Co-Sponsors <small style="font-style:normal;font-weight:400;text-transform:none;letter-spacing:0">(comma-separated)</small></label>
+      <label>Co-Signatories <small style="font-style:normal;font-weight:400;text-transform:none;letter-spacing:0">(comma-separated)</small></label>
       <input type="text" id="d-sponsors" placeholder="e.g. France, Germany, Brazil, Kenya" />
     </div>
 
@@ -580,9 +820,20 @@
 
 <!-- ══ RESOLUTION BOARD ══ -->
 <div class="page" id="page-board">
-  <p class="page-eyebrow">▸ Live Status Board</p>
+  <p class="page-eyebrow" style="color: red;">▸ Live Status Board</p>
   <h1 class="page-title">Resolution Board</h1>
   <div class="divider"></div>
+
+  <!-- Announcements section -->
+  <div class="announce-section" id="announce-section">
+    <div class="announce-section-title">
+      <span>📢 Announcements from Chairs</span>
+      <span id="announce-board-count" style="font-size:.6rem;color:var(--muted)"></span>
+    </div>
+    <div id="announce-board-list">
+      <div class="empty-state" style="padding:1.5rem">No announcements yet.</div>
+    </div>
+  </div>
 
   <div class="stats-bar">
     <div class="stat-box"><div class="stat-num" id="stat-total">0</div><div class="stat-label">Total</div></div>
@@ -621,7 +872,6 @@
   <div id="chair-login">
     <div class="login-wrap">
       <div class="login-card">
-        <p class="page-eyebrow">▸ Restricted Access</p>
         <h2 class="login-title">Chair Login</h2>
         <div class="divider"></div>
         <div class="form-row">
@@ -631,7 +881,6 @@
         </div>
         <button class="btn btn-primary" onclick="chairLogin()" style="width:100%">Access Admin Panel →</button>
         <p style="margin-top:1rem;font-size:.73rem;color:var(--muted);font-family:'JetBrains Mono',monospace">
-          For assistance call <strong>0505161905</strong>
         </p>
       </div>
     </div>
@@ -641,31 +890,6 @@
     <p class="page-eyebrow">▸ Chair Administration</p>
     <h1 class="page-title">Resolution Management</h1>
     <div class="divider"></div>
-
-    <div class="filter-bar" id="admin-status-bar">
-      <button class="filter-btn active" onclick="setAdminFilter('all',this)">All</button>
-      <button class="filter-btn" onclick="setAdminFilter('pending',this)">Pending</button>
-      <button class="filter-btn" onclick="setAdminFilter('debate',this)">In Debate</button>
-      <button class="filter-btn" onclick="setAdminFilter('passed',this)">Passed</button>
-      <button class="filter-btn" onclick="setAdminFilter('denied',this)">Denied</button>
-      <button class="filter-btn" onclick="setAdminFilter('tabled',this)">Tabled</button>
-      <button class="filter-btn" onclick="chairLogout()" style="margin-left:auto;color:#ef4444;border-color:#fca5a5">Logout</button>
-    </div>
-
-    <div class="filter-bar" id="admin-committee-bar" style="margin-top:-.75rem">
-      <button class="filter-btn active" onclick="setAdminCommitteeFilter('all',this)">All Committees</button>
-      <button class="filter-btn" onclick="setAdminCommitteeFilter('GA1',this)">GA1</button>
-      <button class="filter-btn" onclick="setAdminCommitteeFilter('GA2',this)">GA2</button>
-      <button class="filter-btn" onclick="setAdminCommitteeFilter('ECOSOC',this)">ECOSOC</button>
-      <button class="filter-btn" onclick="setAdminCommitteeFilter('UNICEF',this)">UNICEF</button>
-      <button class="filter-btn" onclick="setAdminCommitteeFilter('WHO',this)">WHO</button>
-      <button class="filter-btn" onclick="setAdminCommitteeFilter('HRC',this)">HRC</button>
-      <button class="filter-btn" onclick="setAdminCommitteeFilter('UNDP',this)">UNDP</button>
-    </div>
-
-    <div class="res-list" id="admin-list" style="margin-top:1.5rem"></div>
-  </div>
-</div>
 
 
 <!-- AMENDMENT MODAL -->
@@ -695,6 +919,71 @@
   </div>
 </div>
 
+<!-- ANNOUNCEMENTS ADMIN PANEL -->
+    <div class="announce-admin-card">
+      <div class="announce-admin-title">📢 Post an Announcement</div>
+      <div class="form-grid-2">
+        <div class="form-row">
+          <label>Title <span class="req">*</span></label>
+          <input type="text" id="ann-title" placeholder="e.g. Lunch break until 2:00 PM" />
+        </div>
+        <div class="form-row">
+          <label>Priority</label>
+          <select id="ann-priority">
+            <option value="info">ℹ️ Info</option>
+            <option value="good">🔔 Break</option>
+            <option value="urgent">⚠️ Urgent</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Message <span class="req">*</span></label>
+        <textarea id="ann-body" rows="3" placeholder="Write your announcement here. All delegates will see this on the Resolution Board…"></textarea>
+      </div>
+      <div class="form-row">
+        <label>Target Committee <small style="font-style:normal;text-transform:none;letter-spacing:0;font-weight:400">(optional — leave blank to send to all)</small></label>
+        <select id="ann-committee">
+          <option value="all">All Committees</option>
+          <option value="GA1">General Assembly I (GA1)</option>
+          <option value="GA2">General Assembly II (GA2)</option>
+          <option value="ECOSOC">Economic &amp; Social Council (ECOSOC)</option>
+          <option value="UNICEF">United Nations International Children's Emergency Fund (UNICEF)</option>
+          <option value="WHO">World Health Organization (WHO)</option>
+          <option value="HRC">Human Rights Council (HRC)</option>
+          <option value="UNDP">United Nations Development Programme (UNDP)</option>
+        </select>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="postAnnouncement()">Post Announcement →</button>
+
+      <!-- Existing announcements list -->
+      <div class="announce-list-admin" id="announce-admin-list"></div>
+    </div>
+    <!-- END ANNOUNCEMENTS PANEL -->
+
+    <div class="filter-bar" id="admin-status-bar">
+      <button class="filter-btn active" onclick="setAdminFilter('all',this)">All</button>
+      <button class="filter-btn" onclick="setAdminFilter('pending',this)">Pending</button>
+      <button class="filter-btn" onclick="setAdminFilter('debate',this)">In Debate</button>
+      <button class="filter-btn" onclick="setAdminFilter('passed',this)">Passed</button>
+      <button class="filter-btn" onclick="setAdminFilter('denied',this)">Denied</button>
+      <button class="filter-btn" onclick="setAdminFilter('tabled',this)">Tabled</button>
+      <button class="filter-btn" onclick="chairLogout()" style="margin-left:auto;color:#ef4444;border-color:#fca5a5">Logout</button>
+    </div>
+
+    <div class="filter-bar" id="admin-committee-bar" style="margin-top:-.75rem">
+      <button class="filter-btn active" onclick="setAdminCommitteeFilter('all',this)">All Committees</button>
+      <button class="filter-btn" onclick="setAdminCommitteeFilter('GA1',this)">GA1</button>
+      <button class="filter-btn" onclick="setAdminCommitteeFilter('GA2',this)">GA2</button>
+      <button class="filter-btn" onclick="setAdminCommitteeFilter('ECOSOC',this)">ECOSOC</button>
+      <button class="filter-btn" onclick="setAdminCommitteeFilter('UNICEF',this)">UNICEF</button>
+      <button class="filter-btn" onclick="setAdminCommitteeFilter('WHO',this)">WHO</button>
+      <button class="filter-btn" onclick="setAdminCommitteeFilter('HRC',this)">HRC</button>
+      <button class="filter-btn" onclick="setAdminCommitteeFilter('UNDP',this)">UNDP</button>
+    </div>
+
+    <div class="res-list" id="admin-list" style="margin-top:1.5rem"></div>
+  </div>
+</div>
 
 <script>
 /* ═══ STATE ═══ */
@@ -957,6 +1246,7 @@ function renderAdmin() {
         <button class="btn btn-sm btn-amend"  onclick="openAmend('${r.id}')"          >✎ Note/Amend</button>
         <button class="btn btn-sm" onclick="setStatus('${r.id}','tabled')"  style="background:#44403c;color:#d4c89a;border:1px solid #44403c">⊘ Table</button>
         <button class="btn btn-sm" onclick="setStatus('${r.id}','pending')" style="background:#1e3a8a;color:#bfdbfe;border:1px solid #1e3a8a">↺ Reset</button>
+         <button class="btn btn-sm" onclick="setStatus('${r.id}','flag')" style="background:#f72f2f;color:#bfdbfe;border:1px solid #1e3a8a">🏳️ Flag</button>
         <button class="btn btn-sm btn-remove" onclick="removeResolution('${r.id}')" style="margin-left:auto">🗑 Remove</button>
         <button class="btn btn-sm" onclick="viewResolution('${r.id}')" style="background:var(--navy);color:var(--sky);border:none">👁 View</button>
       </div>
@@ -979,7 +1269,7 @@ function setStatus(id, status) {
   const r = resolutions.find(r => r.id === id);
   if (!r) return;
   r.status = status; save(); renderAdmin(); updateStats();
-  const labels = { passed:'Resolution passed ✓', denied:'Resolution denied ✗', debate:'Opened for debate ⚑', tabled:'Resolution tabled ⊘', pending:'Reset to pending ↺' };
+  const labels = { passed:'Resolution passed ✓', denied:'Resolution denied ✗', debate:'Opened for debate ⚑', tabled:'Resolution tabled ⊘', pending:'Reset to pending ↺', flag:'Resolution flagged by administrators 🚩' };
   toast(labels[status] || 'Status updated');
 }
 
@@ -1014,7 +1304,7 @@ function viewResolution(id) {
       ${r.id} &nbsp;·&nbsp; ${COMMITTEE_LABELS[r.committee]||r.committee} &nbsp;·&nbsp; ${fmtDate(r.submitted)}
     </div>
     <div style="margin-bottom:.45rem"><strong>Delegate:</strong> ${esc(r.name)}, ${esc(r.country)}</div>
-    ${r.sponsors ? `<div style="margin-bottom:.45rem"><strong>Co-sponsors:</strong> ${esc(r.sponsors)}</div>` : ''}
+    ${r.sponsors ? `<div style="margin-bottom:.45rem"><strong>Co-signatories:</strong> ${esc(r.sponsors)}</div>` : ''}
     <div style="margin-bottom:.75rem"><strong>Topic:</strong> ${esc(r.topic)}</div>
     ${r.gdocs ? `<a class="gdocs-link-badge" href="${esc(r.gdocs)}" target="_blank" rel="noopener" style="margin-bottom:.75rem;display:inline-flex">📄 View Full Resolution Paper ↗</a>` : ''}
     ${r.preambs.length ? `
@@ -1036,7 +1326,7 @@ function viewResolution(id) {
 function save() { localStorage.setItem('mun_res_v2', JSON.stringify(resolutions)); }
 
 function badge(s) {
-  const m = { pending:['badge-pending','Pending Review'], passed:['badge-passed','Passed'], denied:['badge-denied','Denied'], debate:['badge-debate','In Debate'], tabled:['badge-tabled','Tabled'] };
+  const m = { pending:['badge-pending','Pending Review'], passed:['badge-passed','Passed'], denied:['badge-denied','Denied'], debate:['badge-debate','In Debate'], tabled:['badge-tabled','Tabled'], flag:['badge-flag','Flagged by admins'] };
   const [cls, label] = m[s] || ['badge-pending', s];
   return `<span class="status-badge ${cls}">${label}</span>`;
 }
@@ -1067,6 +1357,144 @@ document.querySelectorAll('.modal-overlay').forEach(o => {
 });
 
 updateStats();
+
+/* ═══════════════════════════════════════
+   DARK MODE
+═══════════════════════════════════════ */
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  localStorage.setItem('mun_dark', isDark ? '1' : '0');
+  document.getElementById('dark-btn').textContent = isDark ? '☀ Light' : '🌙 Dark';
+}
+// Restore preference on load
+(function() {
+  if (localStorage.getItem('mun_dark') === '1') {
+    document.body.classList.add('dark');
+    document.getElementById('dark-btn').textContent = '☀ Light';
+  }
+})();
+
+/* ═══════════════════════════════════════
+   ANNOUNCEMENTS
+═══════════════════════════════════════ */
+let announcements = JSON.parse(localStorage.getItem('mun_announcements') || '[]');
+
+const PRIORITY_LABELS = { urgent: '⚠️ Urgent', info: 'ℹ️ Info', good: '🔔 Break' };
+const PRIORITY_BADGE  = { urgent: 'priority-badge-urgent', info: 'priority-badge-info', good: 'priority-badge-good' };
+const COMMITTEE_SHORT = { all:'All Committees', GA1:'GA1', GA2:'GA2', ECOSOC:'ECOSOC', UNICEF:'UNICEF', WHO:'WHO', HRC:'HRC', UNDP:'UNDP' };
+
+function saveAnnouncements() {
+  localStorage.setItem('mun_announcements', JSON.stringify(announcements));
+}
+
+function postAnnouncement() {
+  const title     = document.getElementById('ann-title').value.trim();
+  const body      = document.getElementById('ann-body').value.trim();
+  const priority  = document.getElementById('ann-priority').value;
+  const committee = document.getElementById('ann-committee').value;
+  if (!title || !body) { toast('Please fill in the title and message.', true); return; }
+
+  const ann = {
+    id: 'ANN-' + Date.now().toString(36).toUpperCase().slice(-6),
+    title, body, priority, committee,
+    posted: new Date().toISOString()
+  };
+  announcements.unshift(ann);
+  saveAnnouncements();
+  document.getElementById('ann-title').value = '';
+  document.getElementById('ann-body').value = '';
+  document.getElementById('ann-priority').value = 'info';
+  document.getElementById('ann-committee').value = 'all';
+  renderAnnouncementsAdmin();
+  renderAnnouncementsBoard();
+  updateAnnounceBanner();
+  toast('Announcement posted!');
+  setTimeout(async () => {
+  announcements = announcements.filter(a => a.id !== ann.id);
+  saveAnnouncements();
+  renderAnnouncementsAdmin();
+  renderAnnouncementsBoard();
+  updateAnnounceBanner();
+}, 120000)
+}
+
+function deleteAnnouncement(id) {
+  if (!confirm('Remove this announcement?')) return;
+  announcements = announcements.filter(a => a.id !== id);
+  saveAnnouncements();
+  renderAnnouncementsAdmin();
+  renderAnnouncementsBoard();
+  updateAnnounceBanner();
+  toast('Announcement removed.');
+}
+
+function renderAnnouncementsAdmin() {
+  const list = document.getElementById('announce-admin-list');
+  if (!announcements.length) {
+    list.innerHTML = '<p style="font-size:.8rem;color:var(--muted);margin-top:.75rem;font-family:\'JetBrains Mono\',monospace">No announcements posted yet.</p>';
+    return;
+  }
+  list.innerHTML = announcements.map(a => `
+    <div class="announce-admin-item">
+      <div class="announce-admin-item-text">
+        <div class="announce-admin-item-title">${esc(a.title)}
+          <span class="announce-priority-badge ${PRIORITY_BADGE[a.priority]}" style="margin-left:.4rem">${PRIORITY_LABELS[a.priority]}</span>
+          <span class="announce-target">${COMMITTEE_SHORT[a.committee] || a.committee}</span>
+        </div>
+        <div class="announce-admin-item-meta">${esc(a.body).slice(0,80)}${a.body.length>80?'…':''} · ${fmtDate(a.posted)}</div>
+      </div>
+      <button class="btn-del-announce" onclick="deleteAnnouncement('${a.id}')">🗑 Delete</button>
+    </div>
+  `).join('');
+}
+
+function renderAnnouncementsBoard() {
+  const list  = document.getElementById('announce-board-list');
+  const count = document.getElementById('announce-board-count');
+  if (!announcements.length) {
+    list.innerHTML = '<div class="empty-state" style="padding:1.5rem">No announcements yet.</div>';
+    count.textContent = '';
+    return;
+  }
+  count.textContent = announcements.length + ' announcement' + (announcements.length !== 1 ? 's' : '');
+  list.innerHTML = announcements.map(a => `
+    <div class="announce-card priority-${a.priority}">
+      <div class="announce-card-header">
+        <div class="announce-card-title">${esc(a.title)}</div>
+        <span class="announce-priority-badge ${PRIORITY_BADGE[a.priority]}">${PRIORITY_LABELS[a.priority]}</span>
+      </div>
+      <div class="announce-card-body">${esc(a.body)}</div>
+      <div class="announce-card-meta">
+        ${a.committee !== 'all' ? `<span class="announce-target">${COMMITTEE_SHORT[a.committee] || a.committee}</span>` : '<span class="announce-target">All Committees</span>'}
+        Posted ${fmtDate(a.posted)}
+      </div>
+    </div>
+  `).join('');
+}
+
+function updateAnnounceBanner() {
+  const banner = document.getElementById('announce-banner');
+  const count  = document.getElementById('announce-banner-count');
+  const text   = document.getElementById('announce-banner-text');
+  if (!announcements.length) {
+    banner.classList.remove('visible');
+    return;
+  }
+  const latest = announcements[0];
+  text.textContent  = latest.title;
+  count.textContent = announcements.length > 1 ? '+' + (announcements.length - 1) + ' more' : 'New';
+  banner.classList.add('visible');
+}
+
+// init announcements on load
+renderAnnouncementsBoard();
+updateAnnounceBanner();
+// also render admin list when chair opens the panel (hooked into renderAdmin)
+const _origRenderAdmin = renderAdmin;
+renderAdmin = function() {
+  _origRenderAdmin();
+  renderAnnouncementsAdmin();
+};
 </script>
 </body>
 </html>

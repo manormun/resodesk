@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MUN Resolution Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:      #0b1a3b;
+      --navy-mid:  #122254;
+      --navy-soft: #1a2e6e;
+      --blue:      #1c4ed8;
+      --blue-mid:  #2563eb;
+      --blue-lt:   #3b82f6;
+      --sky:       #bfdbfe;
+      --ice:       #eff6ff;
+      --white:     #ffffff;
+      --ink:       #0f172a;
+      --muted:     #64748b;
+      --border:    #cbd5e1;
+      --border-dk: #93c5fd;
+      --red:       #991b1b;
+      --green:     #14532d;
+      --shadow:    rgba(11,26,59,0.13);
+    }
+    .dropdown {
+      position: relative;
+      width: 250px;
+    }
+
+    #d-country {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    #d-country:focus {
+      border-color: #3b82f6;
+    }
+
+    .dropdown-list {
+      position: absolute;
+      width: 100%;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-top: 5px;
+      max-height: 180px;
+      overflow-y: auto;
+      display: none;
+      z-index: 1000;
+    }
+
+    .dropdown-list div {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .dropdown-list div:hover {
+      background: #f1f5f9;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      background: var(--ice);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse at 0% 0%, rgba(37,99,235,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse at 100% 100%, rgba(11,26,59,0.07) 0%, transparent 55%);
+    }
+
+    /* HEADER */
+    .site-header {
+      background: var(--navy);
+      color: white;
+      padding: 0 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      border-bottom: 3px solid var(--blue-mid);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 24px rgba(11,26,59,0.35);
+    }
+
+    .logo { display:flex; align-items:center; gap:.85rem; }
+    .logo-emblem { width:38px; height:38px; flex-shrink:0; }
+    .logo-emblem svg { width:100%; height:100%; }
+
+    .logo-text {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.2rem; font-weight:700;
+      letter-spacing: .04em; color:white;
+    }
+
+    .logo-sub {
+      font-style: bold;
+      font-size: .58rem; color: var(--sky);
+      letter-spacing: .22em; text-transform: uppercase;
+      display:block; line-height:1; margin-top:2px;
+    }
+
+    .nav-tabs { display:flex; gap:0; height:100%; }
+
+    .nav-tab {
+      background:none; border:none;
+      color: #93c5fd;
+      font-family: 'JetBrains Mono', monospace;
+      font-size:.68rem; letter-spacing:.14em;
+      text-transform:uppercase;
+      padding:0 1.4rem; cursor:pointer; height:100%;
+      border-bottom:3px solid transparent;
+      margin-bottom:-3px; transition:all .2s;
+    }
+
+    
+
+    .nav-tab:hover { color:white; }
+    .nav-tab.active { color:white; border-bottom-color:var(--blue-lt); background:rgba(255,255,255,.04); }
+
+    /* LAYOUT */
+    .page { display:none; padding:2.5rem 2rem; max-width:940px; margin:0 auto; }
+    .page.active { display:block; animation:fadeUp .3s ease; }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(10px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .page-eyebrow {
+      font-family:'JetBrains Mono',monospace;
+      font-size:.65rem; letter-spacing:.2em;
+      text-transform:uppercase; color:var(--blue-mid); margin-bottom:.5rem;
+    }
+
+    .page-title {
+      font-family:'Libre Baskerville',serif;
+      font-size:2.4rem; font-weight:700;
+      line-height:1.1; color:var(--navy); margin-bottom:.5rem;
+    }
+
+    .divider {
+      height:2px;
+      background:linear-gradient(to right, var(--blue-mid), transparent);
+      margin:1.25rem 0 2rem;
+    }
+
+    /* FORM CARD */
+    .form-card {
+      background:var(--white);
+      border:1px solid var(--border);
+      border-top:3px solid var(--blue-mid);
+      border-radius:4px;
+      padding:2rem 2.25rem;
+      box-shadow:0 4px 20px var(--shadow);
+    }
+
+    .form-section-title {
+      font-family:'JetBrains Mono',monospace;
+      font-style: normal;
+      font-size:.80rem; letter-spacing:.18em;
+      text-transform:uppercase; color:var(--blue-mid);
+      border-bottom:1px solid var(--border);
+      padding-bottom:.5rem;
+      margin:1.75rem 0 1.25rem;
+    }
+    .form-section-title:first-child { margin-top:0; }
+
+    .form-row { margin-bottom:1.25rem; }
+
+    .form-row label {
+      display:block;
+      font-family:'JetBrains Mono',monospace;
+      font-size:.68rem; letter-spacing:.13em;
+      text-transform:uppercase; color:var(--muted); margin-bottom:.4rem;
+    }
+
+    .form-row label .req { color:var(--blue-mid); margin-left:2px; }
+
+    .form-row input,
+    .form-row select,
+    .form-row textarea {
+      width:100%; padding:.65rem .9rem;
+      border:1.5px solid var(--border);
+      background:var(--ice);
+      font-family:'DM Sans',sans-serif;
+      font-size:.93rem; color:var(--ink);
+      border-radius:3px; outline:none;
+      transition:border-color .2s, background .2s;
+    }
+
+    .form-row input:focus,
+    .form-row select:focus,
+    .form-row textarea:focus {
+      border-color:var(--blue-mid); background:white;
+    }
+
+    .form-row textarea { resize:vertical; min-height:85px; }
+
+    .form-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; }
+    @media(max-width:640px){ .form-grid-2 { grid-template-columns:1fr; } }
+
+    /* GOOGLE DOCS */
+    .gdocs-field { position:relative; }
+    .gdocs-field input { padding-left:2.6rem; }
+    .gdocs-icon { position:absolute; left:.75rem; top:50%; transform:translateY(-50%); width:18px; height:18px; pointer-events:none; }
+    .gdocs-hint { font-size:.72rem; color:var(--muted); margin-top:.35rem; font-family:'JetBrains Mono',monospace; }
+
+    .gdocs-preview {
+      display:none; align-items:center; gap:.5rem;
+      background:#eff6ff; border:1px solid #bfdbfe;
+      border-radius:3px; padding:.5rem .75rem;
+      margin-top:.5rem; font-size:.8rem; color:var(--navy-soft);
+    }
+    .gdocs-preview.visible { display:flex; }
+    .gdocs-preview a { color:var(--blue-mid); text-decoration:none; font-weight:500; }
+    .gdocs-preview a:hover { text-decoration:underline; }
+
+    /* CLAUSES */
+    .clause-list { display:flex; flex-direction:column; gap:.55rem; }
+
+    .clause-item { display:flex; gap:.6rem; align-items:flex-start; }
+
+    .clause-label {
+      font-family:'Libre Baskerville',serif;
+      font-style:italic; font-size:.83rem;
+      color:var(--blue-mid); min-width:145px;
+      padding-top:.72rem; flex-shrink:0;
+    }
+
+    .clause-item input { flex:1; }
+
+    .clause-remove {
+      background:none; border:none; color:#94a3b8;
+      cursor:pointer; font-size:1.1rem;
+      padding:.65rem .3rem; transition:color .2s; flex-shrink:0;
+    }
+    .clause-remove:hover { color:var(--red); }
+
+    .add-clause-btn {
+      background:none;
+      border:1.5px dashed var(--border-dk);
+      color:var(--blue-mid);
+      font-family:'JetBrains Mono',monospace;
+      font-size:.68rem; letter-spacing:.1em;
+      padding:.55rem 1rem; cursor:pointer;
+      width:100%; margin-top:.4rem; border-radius:3px;
+      transition:all .2s;
+    }
+    .add-clause-btn:hover { border-color:var(--blue-mid); background:var(--ice); }
+
+    /* BUTTONS */
+    .btn {
+      font-family:'JetBrains Mono',monospace;
+      font-size:.72rem; letter-spacing:.14em;
+      text-transform:uppercase;
+      padding:.75rem 2rem; border:none;
+      cursor:pointer; transition:all .18s; border-radius:3px;
+    }
+
+    .btn-primary { background:var(--blue); color:white; }
+    .btn-primary:hover { background:var(--navy-soft); }
+
+    .btn-sm { padding:.38rem .85rem; font-size:.63rem; border-radius:2px; }
+
+    .btn-pass   { background:var(--green);  color:#bbf7d0; border:1px solid var(--green); }
+    .btn-pass:hover { background:#166534; }
+    .btn-deny   { background:var(--red);    color:#fecaca; border:1px solid var(--red); }
+    .btn-deny:hover { background:#7f1d1d; }
+    .btn-debate { background:var(--navy);   color:var(--sky); border:1px solid var(--navy-soft); }
+    .btn-debate:hover { background:var(--navy-soft); }
+    .btn-amend  { background:#1e3a5f; color:#bae6fd; border:1px solid #1e3a5f; }
+    .btn-amend:hover { background:#1e40af; }
+    .btn-remove { background:#374151; color:#d1d5db; border:1px solid #374151; }
+    .btn-remove:hover { background:#1f2937; }
+
+    /* RES CARDS */
+    .res-list { display:flex; flex-direction:column; gap:1rem; }
+
+    .res-card {
+      background:white; border:1px solid var(--border);
+      border-left:4px solid var(--border);
+      padding:1.25rem 1.5rem; border-radius:3px;
+      box-shadow:0 2px 10px var(--shadow);
+      transition:box-shadow .2s, transform .2s;
+    }
+    .res-card:hover { box-shadow:0 6px 20px var(--shadow); transform:translateY(-1px); }
+
+    .res-card.status-pending { border-left-color:#f59e0b; }
+    .res-card.status-passed  { border-left-color:#16a34a; }
+    .res-card.status-denied  { border-left-color:#dc2626; }
+    .res-card.status-debate  { border-left-color:var(--blue-mid); }
+    .res-card.status-tabled  { border-left-color:#9ca3af; }
+
+    .res-header { display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; margin-bottom:.5rem; }
+
+    .res-id { font-family:'JetBrains Mono',monospace; font-size:.62rem; color:var(--muted); letter-spacing:.1em; margin-bottom:.2rem; }
+    .res-title { font-family:'Libre Baskerville',serif; font-size:1.05rem; font-weight:700; line-height:1.3; color:var(--navy); }
+
+    .res-meta { font-size:.78rem; color:var(--muted); margin-bottom:.6rem; display:flex; gap:.85rem; flex-wrap:wrap; }
+
+    .status-badge {
+      font-family:'JetBrains Mono',monospace;
+      font-size:.58rem; letter-spacing:.14em;
+      text-transform:uppercase;
+      padding:.22rem .55rem; border-radius:2px; white-space:nowrap; flex-shrink:0;
+    }
+
+    .badge-pending { background:#fffbeb; color:#92400e; border:1px solid #fcd34d; }
+    .badge-passed  { background:#f0fdf4; color:#14532d; border:1px solid #86efac; }
+    .badge-denied  { background:#fef2f2; color:#7f1d1d; border:1px solid #fca5a5; }
+    .badge-debate  { background:#eff6ff; color:#1e3a8a; border:1px solid #93c5fd; }
+    .badge-tabled  { background:#f9fafb; color:#4b5563; border:1px solid #d1d5db; }
+
+    .res-actions { display:flex; gap:.45rem; flex-wrap:wrap; margin-top:.85rem; padding-top:.75rem; border-top:1px solid var(--border); }
+
+    .committee-tag {
+      display:inline-block;
+      background:var(--ice); border:1px solid var(--border-dk);
+      color:var(--navy-soft);
+      font-family:'JetBrains Mono',monospace;
+      font-size:.6rem; letter-spacing:.1em;
+      padding:.15rem .45rem; border-radius:2px; margin-right:.35rem;
+    }
+
+    .chair-notes {
+      background:#eff6ff; border:1px solid #bfdbfe;
+      padding:.55rem .85rem; font-size:.8rem; color:#1e40af;
+      margin-top:.5rem; border-radius:3px;
+    }
+
+    .gdocs-link-badge {
+      display:inline-flex; align-items:center; gap:.4rem;
+      background:#f0fdf4; border:1px solid #86efac;
+      border-radius:3px; padding:.3rem .65rem;
+      font-size:.75rem; color:#15803d;
+      font-family:'JetBrains Mono',monospace;
+      text-decoration:none; margin-top:.5rem; transition:background .15s;
+    }
+    .gdocs-link-badge:hover { background:#dcfce7; }
+
+    /* STATS */
+    .stats-bar {
+      display:grid; grid-template-columns:repeat(5,1fr);
+      gap:.75rem; margin-bottom:2rem;
+    }
+    @media(max-width:600px){ .stats-bar { grid-template-columns:repeat(3,1fr); } }
+
+    .stat-box {
+      background:white; border:1px solid var(--border);
+      border-top:3px solid var(--blue-mid);
+      padding:1rem; text-align:center;
+      border-radius:3px; box-shadow:0 2px 8px var(--shadow);
+    }
+
+    .stat-num { font-family:'Libre Baskerville',serif; font-size:2rem; font-weight:700; color:var(--navy); line-height:1; }
+    .stat-label { font-family:'JetBrains Mono',monospace; font-size:.58rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-top:.25rem; }
+
+    /* FILTERS */
+    .filter-bar { display:flex; gap:.45rem; flex-wrap:wrap; margin-bottom:1.5rem; }
+
+    .filter-btn {
+      background:white; border:1.5px solid var(--border);
+      color:var(--muted);
+      font-family:'JetBrains Mono',monospace;
+      font-size:.63rem; letter-spacing:.12em;
+      text-transform:uppercase;
+      padding:.35rem .85rem; cursor:pointer;
+      border-radius:2px; transition:all .18s;
+    }
+    .filter-btn:hover { border-color:var(--blue-mid); color:var(--blue-mid); }
+    .filter-btn.active { background:var(--navy); border-color:var(--navy); color:var(--sky); }
+
+    /* TOAST */
+    .toast {
+      position:fixed; bottom:2rem; right:2rem;
+      background:var(--navy); color:var(--sky);
+      font-family:'JetBrains Mono',monospace;
+      font-size:.73rem; letter-spacing:.08em;
+      padding:.85rem 1.5rem;
+      border-left:3px solid var(--blue-lt);
+      opacity:0; transform:translateY(8px);
+      transition:all .3s; z-index:999; pointer-events:none;
+      border-radius:3px; box-shadow:0 8px 24px rgba(11,26,59,.3);
+      max-width:360px;
+    }
+    .toast.show { opacity:1; transform:translateY(0); }
+
+    /* MODALS */
+    .modal-overlay {
+      position:fixed; inset:0;
+      background:rgba(11,26,59,.65);
+      display:flex; align-items:center; justify-content:center;
+      z-index:200; opacity:0; pointer-events:none;
+      transition:opacity .22s; backdrop-filter:blur(2px);
+    }
+    .modal-overlay.open { opacity:1; pointer-events:all; }
+
+    .modal {
+      background:white; border:1px solid var(--border);
+      border-top:3px solid var(--blue-mid);
+      padding:2rem; max-width:600px; width:92%;
+      max-height:82vh; overflow-y:auto;
+      transform:translateY(16px) scale(.97);
+      transition:transform .22s; border-radius:4px;
+      box-shadow:0 20px 60px rgba(11,26,59,.3);
+    }
+    .modal-overlay.open .modal { transform:translateY(0) scale(1); }
+
+    .modal-title { font-family:'Libre Baskerville',serif; font-size:1.3rem; font-weight:700; color:var(--navy); margin-bottom:1rem; }
+    .modal-actions { display:flex; gap:.75rem; margin-top:1.5rem; justify-content:flex-end; }
+
+    .btn-ghost {
+      background:none; border:1.5px solid var(--border); color:var(--muted);
+      font-family:'JetBrains Mono',monospace; font-size:.68rem; letter-spacing:.12em;
+      padding:.55rem 1.2rem; cursor:pointer; border-radius:2px; transition:all .18s;
+    }
+    .btn-ghost:hover { border-color:var(--blue-mid); color:var(--blue-mid); }
+
+    /* LOGIN */
+    .login-wrap { display:flex; flex-direction:column; align-items:center; padding:4rem 1rem; }
+    .login-card {
+      background:white; border:1px solid var(--border);
+      border-top:4px solid var(--blue-mid);
+      padding:2.5rem; width:100%; max-width:400px;
+      box-shadow:0 8px 32px var(--shadow); border-radius:4px;
+    }
+    .login-title { font-family:'Libre Baskerville',serif; font-size:1.6rem; font-weight:700; color:var(--navy); margin-bottom:.3rem; }
+
+    .section-label { font-family:'JetBrains Mono',monospace; font-size:.63rem; letter-spacing:.16em; text-transform:uppercase; color:var(--blue-mid); margin-bottom:.6rem; margin-top:1rem; }
+
+    .empty-state {
+      text-align:center; padding:3rem; color:var(--muted);
+      font-family:'JetBrains Mono',monospace; font-size:.75rem;
+      letter-spacing:.1em; border:1.5px dashed var(--border);
+      border-radius:3px; background:white;
+    }
+
+    ::-webkit-scrollbar { width:6px; }
+    ::-webkit-scrollbar-track { background:var(--ice); }
+    ::-webkit-scrollbar-thumb { background:var(--border-dk); border-radius:3px; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">
+    <div class="logo-emblem">
+      <img src="chart.png" style="width:38px; height:38px;" />
+        <circle cx="19" cy="19" r="17" stroke="#3b82f6" stroke-width="1.5"/>
+        <ellipse cx="19" cy="19" rx="8" ry="17" stroke="#3b82f6" stroke-width="1.2"/>
+        <line x1="2" y1="19" x2="36" y2="19" stroke="#3b82f6" stroke-width="1.2"/>
+        <line x1="19" y1="2" x2="19" y2="36" stroke="#3b82f6" stroke-width="1.2"/>
+        <path d="M4 12h30M4 26h30" stroke="#3b82f6" stroke-width="1" stroke-dasharray="2 2"/>
+      </svg>
+    </div>
+    <div>
+      <span class="logo-text">ResoDesk</span>
+      <span class="logo-sub">Manor Hall Model United Nations</span>
+    </div>
+  </div>
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('delegate',this)">Delegate Portal</button>
+    <button class="nav-tab" onclick="showPage('board',this)">Resolution Board</button>
+    <button class="nav-tab" onclick="showPage('chair',this)">Chair Admin</button>
+  </nav>
+</header>
+
+<div class="toast" id="toast"></div>
+
+
+<!-- ══ DELEGATE PORTAL ══ -->
+<div class="page active" id="page-delegate">
+  <p class="page-eyebrow">▸ Submit a Resolution</p>
+  <h1 class="page-title">Draft Your Resolution</h1>
+  <div class="divider"></div>
+
+  <div class="form-card">
+    <div class="form-section-title">Delegate Information</div>
+    <div class="form-grid-2">
+      <div class="form-row">
+        <label>Delegate Name <span class="req">*</span></label>
+        <input type="text" id="d-name" placeholder="e.g. Rami Rasheed" />
+      </div>
+      <div class="form-row">
+        <label>Country / Delegation <span class="req">*</span></label>
+        <div class="dropdown">
+        <input type="text" id="d-country" placeholder="e.g. Republic of Jordan" autocomplete="off" />
+        <div class="dropdown-list" id="country-list">
+          <div>United Arab Emirates</div>
+          <div>United States</div>
+          <div>United Kingdom</div>
+          <div>Canada</div>
+          <div>Australia</div>
+          <div>Germany</div>
+          <div>France</div>
+          <div>India</div>
+          <div>Japan</div>
+          <div>South Korea</div>
+          <div>Saudi Arabia</div>
+          <div>Jordan</div>
+          <div>Egypt</div>
+          <div>Turkey</div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="form-grid-2">
+      <div class="form-row">
+        <label>Committee <span class="req">*</span></label>
+        <select id="d-committee">
+          <option value="">Select your committee…</option>
+          <option value="GA1">General Assembly I (GA1)</option>
+          <option value="GA2">General Assembly II (GA2)</option>
+          <option value="ECOSOC">Economic & Social Council (ECOSOC)</option>
+          <option value="UNICEF">United Nations International Children's Emergency Fund (UNICEF)</option>
+          <option value="WHO">World Health Organization (WHO)</option>
+          <option value="HRC">Human Rights Council (HRC)</option>
+          <option value="UNDP">United Nations Development Programme (UNDP)</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Agenda Topic <span class="req">*</span></label>
+        <input type="text" id="d-topic" placeholder="e.g. Climate change adaptation in LDCs" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label>Co-Sponsors <small style="font-style:normal;font-weight:400;text-transform:none;letter-spacing:0">(comma-separated)</small></label>
+      <input type="text" id="d-sponsors" placeholder="e.g. France, Germany, Brazil, Kenya" />
+    </div>
+
+    <div class="form-section-title">Resolution Paper</div>
+
+    <div class="form-row">
+      <label>Resolution Title <span class="req">*</span></label>
+      <input type="text" id="d-title" placeholder='e.g. "A Resolution on Universal Access to Clean Water"' />
+    </div>
+
+    <div class="form-row">
+      <label>Google Docs Link <small style="font-style:normal;font-weight:400;text-transform:none;letter-spacing:0">— attach your full resolution paper</small></label>
+      <div class="gdocs-field">
+        <svg class="gdocs-icon" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="1" width="11" height="16" rx="1" fill="#4285f4" opacity="0.15" stroke="#4285f4" stroke-width="1.2"/>
+          <path d="M11 1v4h4" stroke="#4285f4" stroke-width="1.2"/>
+          <rect x="11" y="1" width="4" height="4" fill="#4285f4" opacity="0.35"/>
+          <line x1="4.5" y1="8" x2="12.5" y2="8" stroke="#4285f4" stroke-width="1"/>
+          <line x1="4.5" y1="10.5" x2="12.5" y2="10.5" stroke="#4285f4" stroke-width="1"/>
+          <line x1="4.5" y1="13" x2="9" y2="13" stroke="#4285f4" stroke-width="1"/>
+        </svg>
+        <input type="url" id="d-gdocs" placeholder="https://docs.google.com/document/d/…" oninput="previewGdocs(this.value)" />
+      </div>
+      <div class="gdocs-hint">Paste a shareable Google Docs link — make sure sharing is set to "Anyone with the link can view"</div>
+      <div class="gdocs-preview" id="gdocs-preview">
+        <svg width="14" height="14" viewBox="0 0 18 18" fill="none"><rect x="2" y="1" width="11" height="16" rx="1" fill="#4285f4"/><path d="M11 1v4h4" stroke="white" stroke-width="1.2"/><rect x="11" y="1" width="4" height="4" fill="#4285f4"/></svg>
+        <a id="gdocs-preview-link" href="#" target="_blank" rel="noopener">View linked document ↗</a>
+      </div>
+    </div>
+
+    <div class="form-section-title">Supporting Notes</div>
+    <div class="form-row">
+      <label>Additional Notes / Justification <small style="font-style:normal;text-transform:none;letter-spacing:0;font-weight:400">(optional)</small></label>
+      <textarea id="d-notes" placeholder="Supporting arguments, cited UN resolutions, statistics, or context for the chairs…"></textarea>
+    </div>
+
+    <button class="btn btn-primary" onclick="submitResolution()" style="width:100%;display:block;margin-top:.5rem">Submit Resolution →</button>
+  </div>
+</div>
+
+
+<!-- ══ RESOLUTION BOARD ══ -->
+<div class="page" id="page-board">
+  <p class="page-eyebrow">▸ Live Status Board</p>
+  <h1 class="page-title">Resolution Board</h1>
+  <div class="divider"></div>
+
+  <div class="stats-bar">
+    <div class="stat-box"><div class="stat-num" id="stat-total">0</div><div class="stat-label">Total</div></div>
+    <div class="stat-box"><div class="stat-num" id="stat-pending">0</div><div class="stat-label">Pending</div></div>
+    <div class="stat-box"><div class="stat-num" id="stat-debate">0</div><div class="stat-label">In Debate</div></div>
+    <div class="stat-box"><div class="stat-num" id="stat-passed">0</div><div class="stat-label">Passed</div></div>
+    <div class="stat-box"><div class="stat-num" id="stat-denied">0</div><div class="stat-label">Denied</div></div>
+  </div>
+
+  <div class="filter-bar" id="board-filter-bar">
+    <button class="filter-btn active" onclick="setFilter('all',this)">All Statuses</button>
+    <button class="filter-btn" onclick="setFilter('pending',this)">Pending</button>
+    <button class="filter-btn" onclick="setFilter('debate',this)">In Debate</button>
+    <button class="filter-btn" onclick="setFilter('passed',this)">Passed</button>
+    <button class="filter-btn" onclick="setFilter('denied',this)">Denied</button>
+    <button class="filter-btn" onclick="setFilter('tabled',this)">Tabled</button>
+  </div>
+
+  <div class="filter-bar" id="board-committee-bar" style="margin-top:-.75rem">
+    <button class="filter-btn active" onclick="setCommitteeFilter('all',this)">All Committees</button>
+    <button class="filter-btn" onclick="setCommitteeFilter('GA1',this)">GA1</button>
+    <button class="filter-btn" onclick="setCommitteeFilter('GA2',this)">GA2</button>
+    <button class="filter-btn" onclick="setCommitteeFilter('ECOSOC',this)">ECOSOC</button>
+    <button class="filter-btn" onclick="setCommitteeFilter('UNICEF',this)">UNICEF</button>
+    <button class="filter-btn" onclick="setCommitteeFilter('WHO',this)">WHO</button>
+    <button class="filter-btn" onclick="setCommitteeFilter('HRC',this)">HRC</button>
+    <button class="filter-btn" onclick="setCommitteeFilter('UNDP',this)">UNDP</button>
+  </div>
+
+  <div class="res-list" id="board-list" style="margin-top:1.5rem"></div>
+</div>
+
+
+<!-- ══ CHAIR ADMIN ══ -->
+<div class="page" id="page-chair">
+  <div id="chair-login">
+    <div class="login-wrap">
+      <div class="login-card">
+        <p class="page-eyebrow">▸ Restricted Access</p>
+        <h2 class="login-title">Chair Login</h2>
+        <div class="divider"></div>
+        <div class="form-row">
+          <label>Chair Password</label>
+          <input type="password" id="chair-pw" placeholder="Enter chair password…"
+            onkeydown="if(event.key==='Enter') chairLogin()" />
+        </div>
+        <button class="btn btn-primary" onclick="chairLogin()" style="width:100%">Access Admin Panel →</button>
+        <p style="margin-top:1rem;font-size:.73rem;color:var(--muted);font-family:'JetBrains Mono',monospace">
+          For assistance call <strong>0505161905</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="chair-admin" style="display:none">
+    <p class="page-eyebrow">▸ Chair Administration</p>
+    <h1 class="page-title">Resolution Management</h1>
+    <div class="divider"></div>
+
+    <div class="filter-bar" id="admin-status-bar">
+      <button class="filter-btn active" onclick="setAdminFilter('all',this)">All</button>
+      <button class="filter-btn" onclick="setAdminFilter('pending',this)">Pending</button>
+      <button class="filter-btn" onclick="setAdminFilter('debate',this)">In Debate</button>
+      <button class="filter-btn" onclick="setAdminFilter('passed',this)">Passed</button>
+      <button class="filter-btn" onclick="setAdminFilter('denied',this)">Denied</button>
+      <button class="filter-btn" onclick="setAdminFilter('tabled',this)">Tabled</button>
+      <button class="filter-btn" onclick="chairLogout()" style="margin-left:auto;color:#ef4444;border-color:#fca5a5">Logout</button>
+    </div>
+
+    <div class="filter-bar" id="admin-committee-bar" style="margin-top:-.75rem">
+      <button class="filter-btn active" onclick="setAdminCommitteeFilter('all',this)">All Committees</button>
+      <button class="filter-btn" onclick="setAdminCommitteeFilter('GA1',this)">GA1</button>
+      <button class="filter-btn" onclick="setAdminCommitteeFilter('GA2',this)">GA2</button>
+      <button class="filter-btn" onclick="setAdminCommitteeFilter('ECOSOC',this)">ECOSOC</button>
+      <button class="filter-btn" onclick="setAdminCommitteeFilter('UNICEF',this)">UNICEF</button>
+      <button class="filter-btn" onclick="setAdminCommitteeFilter('WHO',this)">WHO</button>
+      <button class="filter-btn" onclick="setAdminCommitteeFilter('HRC',this)">HRC</button>
+      <button class="filter-btn" onclick="setAdminCommitteeFilter('UNDP',this)">UNDP</button>
+    </div>
+
+    <div class="res-list" id="admin-list" style="margin-top:1.5rem"></div>
+  </div>
+</div>
+
+
+<!-- AMENDMENT MODAL -->
+<div class="modal-overlay" id="amend-modal">
+  <div class="modal">
+    <h3 class="modal-title">Add Chair Note / Amendment</h3>
+    <input type="hidden" id="amend-res-id" />
+    <div class="form-row">
+      <label>Note or Amendment Text</label>
+      <textarea id="amend-text" rows="4" placeholder="Describe the amendment, procedural note, or message for delegates…"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal('amend-modal')">Cancel</button>
+      <button class="btn btn-amend btn-sm" onclick="saveAmendment()">Save Note</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW MODAL -->
+<div class="modal-overlay" id="view-modal">
+  <div class="modal">
+    <h3 class="modal-title" id="view-modal-title">Resolution</h3>
+    <div id="view-modal-body"></div>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal('view-modal')">Close</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+/* ═══ STATE ═══ */
+let resolutions = JSON.parse(localStorage.getItem('mun_res_v2') || '[]');
+let boardFilter = 'all', boardCommitteeFilter = 'all';
+let adminFilter = 'all', adminCommitteeFilter = 'all';
+let chairLoggedIn = false;
+const CHAIR_PASSWORD = 'manormun2026';
+const input = document.getElementById("d-country");
+const list = document.getElementById("country-list");
+const items = list.getElementsByTagName("div");
+
+input.addEventListener("focus", () => {
+  list.style.display = "block";
+});
+
+input.addEventListener("input", () => {
+  let filter = input.value.toLowerCase();
+  for (let i = 0; i < items.length; i++) {
+    let txt = items[i].innerText.toLowerCase();
+    items[i].style.display = txt.includes(filter) ? "" : "none";
+  }
+});
+
+for (let i = 0; i < items.length; i++) {
+  items[i].addEventListener("click", () => {
+    input.value = items[i].innerText;
+    list.style.display = "none";
+  });
+}
+
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".dropdown")) {
+    list.style.display = "none";
+  }
+});
+
+const COMMITTEE_LABELS = {
+  GA1: 'General Assembly I',
+  GA2: 'General Assembly II',
+  ECOSOC: 'United Nations Children',
+  UNICEF:  'United Nations International Childrens Emergency Fund',
+  WHO: 'World Health Organization',
+  HRC: 'Human Rights Council (HRC)',
+  UNDP: 'United Nations Development Programme',
+};
+
+const preambWords = [
+  'Acknowledging','Aware of','Bearing in mind','Believing','Concerned',
+  'Confident','Conscious','Considering','Convinced','Declaring',
+  'Deeply concerned','Deeply conscious','Deploring','Desiring','Emphasizing',
+  'Expressing','Fully aware','Further recalling','Guided by',
+  'Having considered','Keeping in mind','Mindful of','Noting',
+  'Noting with concern','Observing','Recalling','Reaffirming',
+  'Recognizing','Recognizing also','Referring','Regretting',
+  'Seeking','Taking into account','Taking note','Welcoming'
+];
+
+const operativeWords = [
+  'Accepts','Affirms','Approves','Authorizes','Calls for','Calls upon',
+  'Commends','Condemns','Confirms','Congratulates','Decides','Declares',
+  'Demands','Deplores','Designates','Emphasizes','Encourages','Endorses',
+  'Expresses','Further calls upon','Further invites','Further recommends',
+  'Further requests','Invites','Reaffirms','Recommends','Regrets',
+  'Reminds','Requests','Strongly condemns','Strongly urges',
+  'Supports','Takes note of','Trusts','Urges'
+];
+
+let preambIdx = 1, operativeIdx = 1;
+
+/* ═══ NAV ═══ */
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (id === 'board') renderBoard();
+  if (id === 'chair' && chairLoggedIn) renderAdmin();
+}
+
+/* ═══ GOOGLE DOCS PREVIEW ═══ */
+function previewGdocs(val) {
+  const preview = document.getElementById('gdocs-preview');
+  const link    = document.getElementById('gdocs-preview-link');
+  if (val && val.startsWith('http')) {
+    link.href = val;
+    preview.classList.add('visible');
+  } else {
+    preview.classList.remove('visible');
+  }
+}
+
+/* ═══ CLAUSES ═══ */
+function addClause(listId, words) {
+  const list = document.getElementById(listId);
+  const idx  = listId === 'preamb-list' ? preambIdx++ : operativeIdx++;
+  const word = words[idx % words.length];
+  const item = document.createElement('div');
+  item.className = 'clause-item';
+  item.innerHTML = `
+    <span class="clause-label">${word}</span>
+    <input type="text" placeholder="…" />
+    <button class="clause-remove" onclick="removeClause(this)" title="Remove">×</button>
+  `;
+  list.appendChild(item);
+  item.querySelector('input').focus();
+}
+
+function removeClause(btn) {
+  const list = btn.closest('.clause-item').parentElement;
+  if (list.children.length <= 1) { toast('At least one clause required.', true); return; }
+  btn.closest('.clause-item').remove();
+}
+
+/* ═══ SUBMIT ═══ */
+function submitResolution() {
+  const name      = document.getElementById('d-name').value.trim();
+  const country   = document.getElementById('d-country').value.trim();
+  const committee = document.getElementById('d-committee').value;
+  const topic     = document.getElementById('d-topic').value.trim();
+  const title     = document.getElementById('d-title').value.trim();
+  const sponsors  = document.getElementById('d-sponsors').value.trim();
+  const notes     = document.getElementById('d-notes').value.trim();
+  const gdocs     = document.getElementById('d-gdocs').value.trim();
+
+  if (!name || !country || !committee || !title || !topic) {
+    toast('Please fill in all required fields (*).', true); return;
+  }
+  if (gdocs && !gdocs.startsWith('http')) {
+    toast('Please enter a valid URL for the Google Docs link.', true); return;
+  }
+
+  const preambs = [...document.querySelectorAll('#preamb-list .clause-item')].map(i => ({
+    word: i.querySelector('.clause-label').textContent,
+    text: i.querySelector('input').value.trim()
+  })).filter(c => c.text);
+
+  const operatives = [...document.querySelectorAll('#operative-list .clause-item')].map(i => ({
+    word: i.querySelector('.clause-label').textContent,
+    text: i.querySelector('input').value.trim()
+  })).filter(c => c.text);
+
+  const id = 'RES-' + committee + '-' + Date.now().toString(36).toUpperCase().slice(-5);
+  resolutions.unshift({ id, name, country, committee, topic, title, sponsors, notes, gdocs, preambs, operatives, status: 'pending', submitted: new Date().toISOString(), chairNote: '' });
+  save();
+  toast('Resolution submitted! ID: ' + id);
+  resetForm();
+}
+
+function resetForm() {
+  ['d-name','d-country','d-topic','d-title','d-sponsors','d-notes','d-gdocs'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('d-committee').value = '';
+  document.getElementById('gdocs-preview').classList.remove('visible');
+  document.getElementById('preamb-list').innerHTML = `<div class="clause-item"><span class="clause-label">Recognizing</span><input type="text" placeholder="the fundamental right…" /><button class="clause-remove" onclick="removeClause(this)">×</button></div>`;
+  document.getElementById('operative-list').innerHTML = `<div class="clause-item"><span class="clause-label">Calls upon</span><input type="text" placeholder="all member states to…" /><button class="clause-remove" onclick="removeClause(this)">×</button></div>`;
+  preambIdx = 1; operativeIdx = 1;
+}
+
+/* ═══ BOARD ═══ */
+function renderBoard() {
+  updateStats();
+  const list = document.getElementById('board-list');
+  const filtered = resolutions.filter(r =>
+    (boardFilter === 'all' || r.status === boardFilter) &&
+    (boardCommitteeFilter === 'all' || r.committee === boardCommitteeFilter)
+  );
+  if (!filtered.length) { list.innerHTML = `<div class="empty-state">NO RESOLUTIONS FOUND</div>`; return; }
+  list.innerHTML = filtered.map(r => `
+    <div class="res-card status-${r.status}">
+      <div class="res-header">
+        <div>
+          <div class="res-id">${r.id}</div>
+          <div class="res-title">${esc(r.title)}</div>
+        </div>
+        ${badge(r.status)}
+      </div>
+      <div class="res-meta">
+        <span><span class="committee-tag">${r.committee}</span>${esc(r.committee)}</span>
+        <span>🌍 ${esc(r.country)}</span>
+        <span>👤 ${esc(r.name)}</span>
+        <span>📅 ${fmtDate(r.submitted)}</span>
+      </div>
+      <div style="font-size:.8rem;color:var(--muted)">Topic: <em>${esc(r.topic)}</em></div>
+      ${r.chairNote ? `<div class="chair-notes">⚑ ${esc(r.chairNote)}</div>` : ''}
+      <div style="margin-top:.75rem;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
+        <button class="btn btn-sm" style="background:var(--navy);color:var(--sky);border:none" onclick="viewResolution('${r.id}')">👁 View Resolution</button>
+        ${r.gdocs ? `<a class="gdocs-link-badge" href="${esc(r.gdocs)}" target="_blank" rel="noopener">📄 Resolution Paper ↗</a>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+function setFilter(f, btn) {
+  boardFilter = f;
+  document.querySelectorAll('#board-filter-bar .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); renderBoard();
+}
+
+function setCommitteeFilter(f, btn) {
+  boardCommitteeFilter = f;
+  document.querySelectorAll('#board-committee-bar .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); renderBoard();
+}
+
+function updateStats() {
+  document.getElementById('stat-total').textContent   = resolutions.length;
+  document.getElementById('stat-pending').textContent = resolutions.filter(r => r.status==='pending').length;
+  document.getElementById('stat-debate').textContent  = resolutions.filter(r => r.status==='debate').length;
+  document.getElementById('stat-passed').textContent  = resolutions.filter(r => r.status==='passed').length;
+  document.getElementById('stat-denied').textContent  = resolutions.filter(r => r.status==='denied').length;
+}
+
+/* ═══ CHAIR ═══ */
+function chairLogin() {
+  if (document.getElementById('chair-pw').value === CHAIR_PASSWORD) {
+    chairLoggedIn = true;
+    document.getElementById('chair-login').style.display = 'none';
+    document.getElementById('chair-admin').style.display = 'block';
+    renderAdmin(); toast('Welcome, Chair.');
+  } else { toast('Incorrect password.', true); }
+}
+
+function chairLogout() {
+  chairLoggedIn = false;
+  document.getElementById('chair-login').style.display = '';
+  document.getElementById('chair-admin').style.display = 'none';
+  document.getElementById('chair-pw').value = '';
+}
+
+function renderAdmin() {
+  const list = document.getElementById('admin-list');
+  const filtered = resolutions.filter(r =>
+    (adminFilter === 'all' || r.status === adminFilter) &&
+    (adminCommitteeFilter === 'all' || r.committee === adminCommitteeFilter)
+  );
+  if (!filtered.length) { list.innerHTML = `<div class="empty-state">NO RESOLUTIONS FOUND</div>`; return; }
+  list.innerHTML = filtered.map(r => `
+    <div class="res-card status-${r.status}">
+      <div class="res-header">
+        <div>
+          <div class="res-id">${r.id}</div>
+          <div class="res-title">${esc(r.title)}</div>
+        </div>
+        ${badge(r.status)}
+      </div>
+      <div class="res-meta">
+        <span><span class="committee-tag">${r.committee}</span>${COMMITTEE_LABELS[r.committee]||r.committee}</span>
+        <span>🌍 ${esc(r.country)}</span>
+        <span>👤 ${esc(r.name)}</span>
+        ${r.sponsors ? `<span>🤝 ${esc(r.sponsors)}</span>` : ''}
+        <span>📅 ${fmtDate(r.submitted)}</span>
+      </div>
+      <div style="font-size:.8rem;color:var(--muted)">Topic: <em>${esc(r.topic)}</em></div>
+      ${r.gdocs ? `<a class="gdocs-link-badge" href="${esc(r.gdocs)}" target="_blank" rel="noopener">📄 View Resolution Paper ↗</a>` : ''}
+      ${r.chairNote ? `<div class="chair-notes">⚑ ${esc(r.chairNote)}</div>` : ''}
+      ${r.notes ? `<div style="font-size:.8rem;color:#555;margin-top:.5rem;padding:.5rem .75rem;background:#f8fafc;border-radius:3px;border:1px solid var(--border)">📝 ${esc(r.notes)}</div>` : ''}
+      <div class="res-actions">
+        <button class="btn btn-sm btn-pass"   onclick="setStatus('${r.id}','passed')" >✓ Pass</button>
+        <button class="btn btn-sm btn-deny"   onclick="setStatus('${r.id}','denied')" >✗ Deny</button>
+        <button class="btn btn-sm btn-debate" onclick="setStatus('${r.id}','debate')" >⚑ Open Debate</button>
+        <button class="btn btn-sm btn-amend"  onclick="openAmend('${r.id}')"          >✎ Note/Amend</button>
+        <button class="btn btn-sm" onclick="setStatus('${r.id}','tabled')"  style="background:#44403c;color:#d4c89a;border:1px solid #44403c">⊘ Table</button>
+        <button class="btn btn-sm" onclick="setStatus('${r.id}','pending')" style="background:#1e3a8a;color:#bfdbfe;border:1px solid #1e3a8a">↺ Reset</button>
+        <button class="btn btn-sm btn-remove" onclick="removeResolution('${r.id}')" style="margin-left:auto">🗑 Remove</button>
+        <button class="btn btn-sm" onclick="viewResolution('${r.id}')" style="background:var(--navy);color:var(--sky);border:none">👁 View</button>
+      </div>
+    </div>`).join('');
+}
+
+function setAdminFilter(f, btn) {
+  adminFilter = f;
+  document.querySelectorAll('#admin-status-bar .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); renderAdmin();
+}
+
+function setAdminCommitteeFilter(f, btn) {
+  adminCommitteeFilter = f;
+  document.querySelectorAll('#admin-committee-bar .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); renderAdmin();
+}
+
+function setStatus(id, status) {
+  const r = resolutions.find(r => r.id === id);
+  if (!r) return;
+  r.status = status; save(); renderAdmin(); updateStats();
+  const labels = { passed:'Resolution passed ✓', denied:'Resolution denied ✗', debate:'Opened for debate ⚑', tabled:'Resolution tabled ⊘', pending:'Reset to pending ↺' };
+  toast(labels[status] || 'Status updated');
+}
+
+function removeResolution(id) {
+  if (!confirm('Permanently remove this resolution? This cannot be undone.')) return;
+  resolutions = resolutions.filter(r => r.id !== id);
+  save(); renderAdmin(); updateStats();
+  toast('Resolution removed.');
+}
+
+function openAmend(id) {
+  document.getElementById('amend-res-id').value = id;
+  document.getElementById('amend-text').value = resolutions.find(r => r.id === id)?.chairNote || '';
+  document.getElementById('amend-modal').classList.add('open');
+}
+
+function saveAmendment() {
+  const id = document.getElementById('amend-res-id').value;
+  const text = document.getElementById('amend-text').value.trim();
+  const r = resolutions.find(r => r.id === id);
+  if (r) { r.chairNote = text; save(); renderAdmin(); }
+  closeModal('amend-modal'); toast('Note saved.');
+}
+
+/* ═══ VIEW MODAL ═══ */
+function viewResolution(id) {
+  const r = resolutions.find(r => r.id === id);
+  if (!r) return;
+  document.getElementById('view-modal-title').textContent = r.title;
+  document.getElementById('view-modal-body').innerHTML = `
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);margin-bottom:.85rem;letter-spacing:.08em">
+      ${r.id} &nbsp;·&nbsp; ${COMMITTEE_LABELS[r.committee]||r.committee} &nbsp;·&nbsp; ${fmtDate(r.submitted)}
+    </div>
+    <div style="margin-bottom:.45rem"><strong>Delegate:</strong> ${esc(r.name)}, ${esc(r.country)}</div>
+    ${r.sponsors ? `<div style="margin-bottom:.45rem"><strong>Co-sponsors:</strong> ${esc(r.sponsors)}</div>` : ''}
+    <div style="margin-bottom:.75rem"><strong>Topic:</strong> ${esc(r.topic)}</div>
+    ${r.gdocs ? `<a class="gdocs-link-badge" href="${esc(r.gdocs)}" target="_blank" rel="noopener" style="margin-bottom:.75rem;display:inline-flex">📄 View Full Resolution Paper ↗</a>` : ''}
+    ${r.preambs.length ? `
+      <div class="section-label">Preambulatory Clauses</div>
+      ${r.preambs.map(c=>`<p style="margin-bottom:.4rem;font-size:.87rem;line-height:1.6"><em style="color:var(--blue-mid)">${esc(c.word)}</em> ${esc(c.text)}</p>`).join('')}
+    ` : ''}
+    ${r.operatives.length ? `
+      <div class="section-label">Operative Clauses</div>
+      ${r.operatives.map(c=>`<p style="margin-bottom:.4rem;font-size:.87rem;line-height:1.6"><em style="color:var(--blue-mid)">${esc(c.word)}</em> ${esc(c.text)}</p>`).join('')}
+    ` : ''}
+    ${r.notes ? `<div class="section-label">Delegate Notes</div><p style="font-size:.85rem;color:#444;line-height:1.5">${esc(r.notes)}</p>` : ''}
+    ${r.chairNote ? `<div class="chair-notes" style="margin-top:1rem">⚑ Chair note: ${esc(r.chairNote)}</div>` : ''}
+    <div style="margin-top:1.25rem">${badge(r.status)}</div>
+  `;
+  document.getElementById('view-modal').classList.add('open');
+}
+
+/* ═══ HELPERS ═══ */
+function save() { localStorage.setItem('mun_res_v2', JSON.stringify(resolutions)); }
+
+function badge(s) {
+  const m = { pending:['badge-pending','Pending Review'], passed:['badge-passed','Passed'], denied:['badge-denied','Denied'], debate:['badge-debate','In Debate'], tabled:['badge-tabled','Tabled'] };
+  const [cls, label] = m[s] || ['badge-pending', s];
+  return `<span class="status-badge ${cls}">${label}</span>`;
+}
+
+function fmtDate(iso) {
+  return new Date(iso).toLocaleString('en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+}
+
+function esc(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+let toastTimer;
+function toast(msg, err=false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.borderLeftColor = err ? '#ef4444' : 'var(--blue-lt)';
+  t.style.color = err ? '#fca5a5' : 'var(--sky)';
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
+});
+
+updateStats();
+</script>
+</body>
+</html>
